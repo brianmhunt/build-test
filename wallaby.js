@@ -1,20 +1,21 @@
 
+const path = require('path')
 const yaml = require('js-yaml')
 const wallabyWebpack = require('wallaby-webpack');
 
-
-module.exports = function(wallaby) {
+module.exports = function (wallaby) {
   var wallabyPostprocessor = wallabyWebpack({
     resolve: {
       root: [
         wallaby.projectCacheDir
-      ],
+      ]
+    },
+    module: {
       loaders: [
         {test: /\.yaml$/, loader: 'json'}
       ]
     }
   });
-
 
   return {
     files: [
@@ -46,29 +47,25 @@ module.exports = function(wallaby) {
     },
 
     compilers: {
-      '**/*.js': wallaby.compilers.babel({}),
-      '**/*.coffee': wallaby.compilers.coffeeScript({noFileRename: true}),
+      '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
+      '**/*.coffee': wallaby.compilers.coffeeScript({noFileRename: true})
     },
 
     preprocessors: {
       '**/*.yaml': file => JSON.stringify(yaml.load(file.content))
     },
 
-    postProcessor: wallabyPostprocessor,
+    postprocessor: wallabyPostprocessor,
 
     testFramework: 'mocha',
 
-    bootstrap: function () {
-      console.warn("Bootstrapping!", mocha)
-    },
+    debug: true,
 
     setup: function () {
       window.assert = chai.assert
       window.bootstrapped = true
+      // required to trigger test loading
       window.__moduleBundler.loadTests();
-    },
-
-    debug: true,
-    reportConsoleErrorAsError: true
+    }
   }
 }

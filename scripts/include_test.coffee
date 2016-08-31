@@ -6,6 +6,7 @@ includes = {
   ij_rel: require('./include'),
   iy_abs: require('scripts/include.yaml'),
   iy_rel: require('./include.yaml'),
+  pj: require('Packages/package-entry')
 }
 
 describe('include_test', ->
@@ -15,12 +16,13 @@ describe('include_test', ->
   )
 
   it("loading js", ->
-    assert.equal(includes.ij_abs.name, 'include')
-    assert.equal(includes.ij_rel.name, 'include')
+    assert.equal(includes.ij_abs.name, 'include.js')
+    assert.equal(includes.ij_rel.name, 'include.js')
   )
 
   it("loading yaml", ->
-    assert.equal(includes.ij_abs.name, 'include.yaml')
+    assert.equal(includes.iy_abs.name, 'include.yaml')
+    assert.equal(includes.iy_rel.name, 'include.yaml')
   )
 
   it("loading package", ->
