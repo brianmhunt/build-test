@@ -27,6 +27,12 @@ describe('include_test', ->
     assert.equal(includes.iy_rel.name, 'include.yaml')
   )
 
+  it("loads yaml from subdir", ->
+    assert.equal(require('scripts/tests/subdir.yaml').name, "subdir.yaml")
+    assert.equal(require('./tests/subdir.yaml').name, "subdir.yaml")
+  )
+
+
   it("loads package", ->
     assert.equal(includes.pj.rel.name, 'package-include')
     assert.equal(includes.pj.abs.name, 'package-include')

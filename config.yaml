@@ -4,8 +4,8 @@ wallaby:
       __dirname: true
       __filename: true
 
-    # entry:
-    #   - scripts/entry.js
+    entry:
+      - scripts/entry.js
 
     module:
       loaders:
@@ -38,8 +38,8 @@ wallaby:
     - pattern: Packages/**/*.yaml
       load: false
 
-    - pattern: scripts/test-entry.js
-      load: false
+    - pattern: scripts/entry.js
+      load: true
       instrument: false
 
     # Ignores
