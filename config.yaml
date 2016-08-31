@@ -45,7 +45,8 @@ wallaby:
     # Ignores
     - "!**/*_test.js"
     - "!**/*_test.coffee"
-    - "!scripts/tests/**/*"
+    - "!scripts/tests/**/*.coffee"
+    - "!scripts/tests/**/*.js"
 
   tests:
     # --- scripts/tests/*
