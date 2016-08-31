@@ -1,7 +1,7 @@
 
 includes = {
-  ic_abs: require('scripts/include.coffee'),
-  ic_rel: require('./include.coffee'),
+  ic_abs: require('scripts/include_c.coffee'),
+  ic_rel: require('./include_c.coffee'),
   ij_abs: require('scripts/include'),
   ij_rel: require('./include'),
   iy_abs: require('scripts/include.yaml'),
@@ -10,7 +10,7 @@ includes = {
 }
 
 describe('include_test', ->
-  global.include_test_ran = true
+  before(() => global.ran.push('include-cs'))
 
   it("loads coffeescript", ->
     assert.equal(includes.ic_abs.name, 'include.coffee')
@@ -61,6 +61,6 @@ describe('include_test', ->
   )
 
   it("expects global.beforeeach_run to be true", ->
-    assert.strictEqual(global.beforeeach_run, true)
+    assert.strictEqual(global.beforeEach_run, true)
   )
 )

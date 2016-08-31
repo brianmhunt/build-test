@@ -1,3 +1,3 @@
 describe("basic", () =>
-  it("is run", () => global.basic_js_ran = true)
+  it("is run", () => global.ran.push('basic-js'))
 )

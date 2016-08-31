@@ -1,7 +1,7 @@
 
 
 describe('tests_test', ->
-  it('is called', -> global.tests_test_ran = true)
+  it('tt is called', -> global.ran.push('tt-cs'))
   it('tests for bootstrapped global', ->
     assert.strictEqual(bootstrapped, true)
   )

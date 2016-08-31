@@ -4,9 +4,6 @@ wallaby:
       __dirname: true
       __filename: true
 
-    entry:
-      - scripts/entry.js
-
     module:
       loaders:
       - test: !!js/regexp /\.yaml$/
@@ -38,25 +35,30 @@ wallaby:
     - pattern: Packages/**/*.yaml
       load: false
 
-    - pattern: scripts/entry.js
-      load: true
-      instrument: false
+    # Ignores - included via entry.js
+    # - pattern: "**/*_test.js"
+    #   load: false
+    # - pattern: "**/*_test.coffee"
+    #   load: false
+    # - pattern: "scripts/tests/**/*.coffee"
+    #   load: false
+    # - pattern: "scripts/tests/**/*.js"
+    #   load: false
 
-    # Ignores
-    - "!**/*_test.js"
-    - "!**/*_test.coffee"
-    - "!scripts/tests/**/*.coffee"
-    - "!scripts/tests/**/*.js"
+    - pattern: "!scripts/entry.js"
+
 
   tests:
-    # --- scripts/tests/*
-    - pattern: 'scripts/tests/**/*.coffee'
+    - pattern: scripts/entry.js
       load: false
-    - pattern: 'scripts/tests/**/*.js'
-      load: false
-
-    # --- *_test.coffee ---
-    - pattern: 'Packages/**/*_test.coffee'
-      load: false
-    - pattern: 'scripts/**/*_test.coffee'
-      load: false
+    # # --- scripts/tests/*
+    # - pattern: 'scripts/tests/**/*.coffee'
+    #   load: false
+    # - pattern: 'scripts/tests/**/*.js'
+    #   load: false
+    #
+    # # --- *_test.coffee ---
+    # - pattern: 'Packages/**/*_test.coffee'
+    #   load: false
+    # - pattern: 'scripts/**/*_test.coffee'
+    #   load: false

@@ -22,10 +22,10 @@ module.exports = function (wallaby) {
     env: { kind: 'electron', },
     testFramework: 'mocha',
     // workers: 1,
-    debug: false,
+    debug: true,
 
     compilers: {
-      '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
+      // '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
       '**/*.coffee': wallaby.compilers.coffeeScript({noFileRename: true})
     },
 
@@ -38,8 +38,14 @@ module.exports = function (wallaby) {
     setup: function () {
       window.assert = chai.assert
       window.expect = chai.expect
-      window.__moduleBundler.loadTests()
       window.bootstrapped = true
+      window.__moduleBundler.loadTests()
+    },
+
+    workers: {
+      initial: 1,
+      regular: 1
     }
+
   }
 }

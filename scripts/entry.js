@@ -5,16 +5,21 @@
 // calls e.g. beforeEach.
 //
 
-beforeEach(() => global.beforeEach_run = true)
+before(() => global.ran = [])
+
+beforeEach(() => {
+  global.beforeEach_run = true
+})
 
 
-afterEach(() => {
-  assert.ok(global.basic_ran)
-  assert.ok(global.basic_js_ran)
-  assert.ok(global.tests_test_ran)
-  assert.ok(global.tests_test_js_ran)
-  assert.ok(global.include_test_ran)
-  assert.ok(global.package_test_ran)
+after(() => {
+  console.log(global.ran)
+  assert.include(global.ran, 'basic-js')
+  assert.include(global.ran, 'basic-cs')
+  assert.include(global.ran, 'include-cs')
+  assert.include(global.ran, 'tt-cs')
+  assert.include(global.ran, 'tt-js')
+  assert.include(global.ran, 'package')
 })
 
 
@@ -26,10 +31,12 @@ describe("inline test", function () {
 global.entry_run = true
 
 
-module.exports = {
-    ic_direct: require('scripts/include.coffee'),
-    ic_rel: require('./include.coffee'),
-    ij_direct: require('scripts/include'),
-    ij_rel: require('./scripts/include'),
-    yaml: require('./include.yaml'),
-}
+
+var testsPath = require.context('./tests', true, /\.(js|coffee)$/)
+testsPath.keys().forEach(testsPath)
+
+var testsPath = require.context('./', true, /_tests?\.(js|coffee)$/)
+testsPath.keys().forEach(testsPath)
+
+var testsPath = require.context('../Packages', true, /_tests?\.(js|coffee)$/)
+testsPath.keys().forEach(testsPath)
