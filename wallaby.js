@@ -78,6 +78,8 @@ module.exports = function(wallaby) {
     setup: function () {
       // required to trigger test loading
       window.__moduleBundler.loadTests();
-    }
+    },
+
+    debug: true
   }
 }
