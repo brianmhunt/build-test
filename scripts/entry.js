@@ -1,4 +1,12 @@
 
+function trial() {
+  console.log("Covered? Changed?")
+}
+
+describe("inline test", function () {
+  it("is run.", () => assert.ok(true))
+})
+
 
 module.exports = {
     ic_direct: require('scripts/include.coffee'),

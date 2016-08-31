@@ -59,7 +59,7 @@ module.exports = function(wallaby) {
     ],
 
     env: {
-      kind: 'phantomjs',
+      kind: 'electron',
     },
 
     preprocessors: {
@@ -73,7 +73,7 @@ module.exports = function(wallaby) {
       '**/*.yaml': file => JSON.stringify(yaml.load(file.content)),
     },
 
-    postProcessors: wallabyPostprocessor,
+    // postProcessors: wallabyPostprocessor,
 
     testFramework: 'mocha',
 
@@ -85,7 +85,7 @@ module.exports = function(wallaby) {
     setup: function () {
       // required to trigger test loading
       window.__moduleBundler.loadTests();
-      // wallaby.testFramework.ui('bdd');
+      wallaby.testFramework.ui('bdd');
     },
 
     debug: true
