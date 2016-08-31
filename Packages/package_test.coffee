@@ -8,4 +8,8 @@ describe('package_test', ->
     assert.equal(e.rel.name, 'package-include')
     assert.equal(e.abs.name, 'package-include')
   )
+
+  it("loads yaml", ->
+    assert.equal(e.yml.name, 'package.yaml')
+  )
 )

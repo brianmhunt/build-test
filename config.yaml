@@ -5,11 +5,11 @@ wallaby:
       __filename: true
 
     # entry:
-    #   - scripts/test-entry.js
+    #   - scripts/entry.js
 
     module:
       loaders:
-      - test: !!js/regexp /\.json$/
+      - test: !!js/regexp /\.yaml$/
         loaders:
           - json-loader
 
@@ -35,10 +35,12 @@ wallaby:
       load: false
     - pattern: scripts/**/*.yaml
       load: false
+    - pattern: Packages/**/*.yaml
+      load: false
 
-    # - pattern: scripts/test-entry.js
-    #   load: false
-    #   instrument: false
+    - pattern: scripts/test-entry.js
+      load: false
+      instrument: false
 
     # Ignores
     - "!**/*_test.js"
@@ -46,9 +48,6 @@ wallaby:
     - "!scripts/tests/**/*"
 
   tests:
-    # - pattern: scripts/test-entry.js
-    #   load: false
-
     # --- scripts/tests/*
     - pattern: 'scripts/tests/**/*.coffee'
       load: false

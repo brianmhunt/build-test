@@ -39,6 +39,7 @@ module.exports = function (wallaby) {
       window.assert = chai.assert
       window.expect = chai.expect
       window.__moduleBundler.loadTests()
+      window.bootstrapped = true
     }
   }
 }
