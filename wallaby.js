@@ -6,7 +6,7 @@ var wallabyPostprocessor = wallabyWebpack({
     module: {
       loaders: [
       {
-        test: /.*\.js/,
+        test: /.*\.(js|coffee)/,
         loader: 'babel',
         query: {
           cacheDirectory: true,
