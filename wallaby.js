@@ -1,41 +1,21 @@
 
+const path = require('path')
 const yaml = require('js-yaml')
 var wallabyWebpack = require('wallaby-webpack');
-var wallabyPostprocessor = wallabyWebpack({
-    // webpack options, such as
-    module: {
-      loaders: [
-      {
-        // test: /.*\.(js|coffee)/,
-        // loader: 'babel',
-        // query: {
-        //   cacheDirectory: true,
-        //   presets: ['2015']
-        // }
-      }
+
+module.exports = function (wallaby) {
+  var wallabyPostprocessor = wallabyWebpack({
+    resolve: {
+      root: [
+        wallaby.projectCacheDir
       ]
     },
-    // externals: { jquery: "jQuery" }
-  }
-);
-
-
-
-// const buble = require('buble')
-// const babel = {
-//   core: require('babel-core'),
-//   register: require('babel-register'),
-// }
-//
-//
-// function preprocessJavascript(file) {
-//   return babel.core.transform(
-//     file.content, {sourceMap: true, presets: ['es2015']}
-//   )
-// }
-
-
-module.exports = function(wallaby) {
+    module: {
+      loaders: [
+        {test: /\.yaml$/, loader: 'json'}
+      ]
+    }
+  });
   return {
     files: [
       {pattern: 'node_modules/chai/chai.js', instrument: false},
@@ -43,6 +23,9 @@ module.exports = function(wallaby) {
 
       {pattern: "scripts/**/*.js", load: false},
       {pattern: "Packages/**/*.js", load: false},
+      {pattern: "scripts/**/*.coffee", load: false},
+      {pattern: "Packages/**/*.coffee", load: false},
+      {pattern: "scripts/**/*.yaml", load: false},
 
       "!**/*_test.js",
       "!**/*_test.coffee",
@@ -62,32 +45,26 @@ module.exports = function(wallaby) {
       kind: 'electron',
     },
 
-    preprocessors: {
-      // 'scripts/**/*.js': preprocessJavascript,
-
-      // 'scripts/*.js': file => buble.transform(file.content, {file: file.path}),
-      // 'Packages/*.js': file => buble.transform(file.content, {file: file.path}),
-
-      'scripts/**/*.js': wallaby.compilers.babel({ presets: ['es2015'] }),
-      'Packages/**/*.js': wallaby.compilers.babel({ presets: ['es2015'] }),
-      '**/*.yaml': file => JSON.stringify(yaml.load(file.content)),
+    compilers: {
+      '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
+      '**/*.coffee': wallaby.compilers.coffeeScript({noFileRename: true})
     },
 
-    // postProcessors: wallabyPostprocessor,
+    preprocessors: {
+      '**/*.yaml': file => JSON.stringify(yaml.load(file.content))
+    },
+
+    postprocessor: wallabyPostprocessor,
 
     testFramework: 'mocha',
 
-    bootstrap: function () {
-      window.assert = chai.assert
-      window.bootstrapped = true
-    },
+    debug: true,
 
     setup: function () {
+      window.assert = chai.assert
+      window.bootstrapped = true
       // required to trigger test loading
       window.__moduleBundler.loadTests();
-      wallaby.testFramework.ui('bdd');
-    },
-
-    debug: true
+    }
   }
 }
