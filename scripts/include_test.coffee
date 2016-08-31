@@ -10,6 +10,8 @@ includes = {
 }
 
 describe('include_test', ->
+  global.include_test_ran = true
+
   it("loading coffeescript", ->
     assert.equal(includes.ic_abs.name, 'include.coffee')
     assert.equal(includes.ic_rel.name, 'include.coffee')
@@ -32,5 +34,27 @@ describe('include_test', ->
 
   it("es6ified", ->
     assert.equal(includes.ij_abs.es6fn(), 'es6 BOO')
+  )
+
+  it("has __filename set", ->
+    assert.equal(__filename, "include_test.coffee")
+  )
+
+  it("has __dirname set", ->
+    # Need to strip lead on proper __dirname
+    # (but '/' is not correct)
+    assert.equal(__dirname, "..../scripts/")
+  )
+
+  it("expects global and window to be same", ->
+    assert.strictEqual(window, global)
+  )
+
+  it("expects entry_run to be true", ->
+    assert.strictEqual(global.entry_run, true)
+  )
+
+  it("expects global.beforeeach_run to be true", ->
+    assert.strictEqual(global.beforeeach_run, true)
   )
 )

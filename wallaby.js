@@ -1,50 +1,28 @@
+'use strict'
 
+const _ = require('lodash')
+const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
-const wallabyWebpack = require('wallaby-webpack');
+const wallabyWebpack = require('wallaby-webpack')
+
+const config = yaml.load(fs.readFileSync('config.yaml'))
+
 
 module.exports = function (wallaby) {
-  var wallabyPostprocessor = wallabyWebpack({
-    resolve: {
-      root: [
-        wallaby.projectCacheDir
-      ]
-    },
-    module: {
-      loaders: [
-        {test: /\.yaml$/, loader: 'json'}
-      ]
-    }
-  });
+  const WALLABY_WEBPACK_CONFIG = _.extend(config.wallaby.webpack, {
+    resolve: { root: [ wallaby.projectCacheDir ] }
+  })
+
+  var wallabyPostprocessor = wallabyWebpack(WALLABY_WEBPACK_CONFIG)
 
   return {
-    files: [
-      {pattern: 'node_modules/chai/chai.js', instrument: false},
-      {pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false},
-
-      {pattern: "scripts/**/*.js", load: false},
-      {pattern: "Packages/**/*.js", load: false},
-      {pattern: "scripts/**/*.coffee", load: false},
-      {pattern: "Packages/**/*.coffee", load: false},
-      {pattern: "scripts/**/*.yaml", load: false},
-
-      "!**/*_test.js",
-      "!**/*_test.coffee",
-      "!scripts/tests/**/*",
-    ],
-
-    tests: [
-      {pattern: 'scripts/tests/**/*.coffee', load: false},
-      {pattern: 'scripts/tests/**/*.js', load: false},
-      {pattern: 'scripts/**/*_test.js', load: false},
-      {pattern: 'scripts/**/*_test.coffee', load: false},
-      {pattern: 'Packages/**/*_test.js', load: false},
-      {pattern: 'Packages/**/*_test.coffee', load: false},
-    ],
-
-    env: {
-      kind: 'electron',
-    },
+    files: config.wallaby.files,
+    tests: config.wallaby.tests,
+    env: { kind: 'electron', },
+    testFramework: 'mocha',
+    // workers: 1,
+    debug: false,
 
     compilers: {
       '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
@@ -57,14 +35,10 @@ module.exports = function (wallaby) {
 
     postprocessor: wallabyPostprocessor,
 
-    testFramework: 'mocha',
-
-    debug: false,
-
     setup: function () {
       window.assert = chai.assert
-      window.bootstrapped = true
-      window.__moduleBundler.loadTests();
+      window.expect = chai.expect
+      window.__moduleBundler.loadTests()
     }
   }
 }

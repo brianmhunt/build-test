@@ -1,0 +1,62 @@
+wallaby:
+  webpack:
+    node:
+      __dirname: true
+      __filename: true
+
+    # entry:
+    #   - scripts/test-entry.js
+
+    module:
+      loaders:
+      - test: !!js/regexp /\.json$/
+        loaders:
+          - json-loader
+
+  files:
+    # Libs
+    - pattern: app/static/libs.js
+      instrument: false
+
+    # Tests
+    - pattern: node_modules/chai/chai.js
+      instrument: false
+    - pattern: node_modules/sinon/pkg/sinon.js
+      instrument: false
+
+    # App and Tests
+    - pattern: scripts/**/*.js
+      load: false
+    - pattern: Packages/**/*.js
+      load: false
+    - pattern: scripts/**/*.coffee
+      load: false
+    - pattern: Packages/**/*.coffee
+      load: false
+    - pattern: scripts/**/*.yaml
+      load: false
+
+    # - pattern: scripts/test-entry.js
+    #   load: false
+    #   instrument: false
+
+    # Ignores
+    - "!**/*_test.js"
+    - "!**/*_test.coffee"
+    - "!scripts/tests/**/*"
+
+  tests:
+    # - pattern: scripts/test-entry.js
+    #   load: false
+
+    # --- scripts/tests/*
+    - pattern: 'scripts/tests/**/*.coffee'
+      load: false
+    - pattern: 'scripts/tests/**/*.js'
+      load: false
+
+    # --- *_test.coffee ---
+    - pattern: 'Packages/**/*_test.coffee'
+      load: false
+    - pattern: 'scripts/**/*_test.coffee'
+      load: false
