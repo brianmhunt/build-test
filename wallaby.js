@@ -59,12 +59,11 @@ module.exports = function (wallaby) {
 
     testFramework: 'mocha',
 
-    debug: true,
+    debug: false,
 
     setup: function () {
       window.assert = chai.assert
       window.bootstrapped = true
-      // required to trigger test loading
       window.__moduleBundler.loadTests();
     }
   }
