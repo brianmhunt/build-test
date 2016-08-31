@@ -6,12 +6,12 @@ var wallabyPostprocessor = wallabyWebpack({
     module: {
       loaders: [
       {
-        test: /.*\.(js|coffee)/,
-        loader: 'babel',
-        query: {
-          cacheDirectory: true,
-          presets: ['2015']
-        }
+        // test: /.*\.(js|coffee)/,
+        // loader: 'babel',
+        // query: {
+        //   cacheDirectory: true,
+        //   presets: ['2015']
+        // }
       }
       ]
     },
@@ -43,6 +43,10 @@ module.exports = function(wallaby) {
 
       {pattern: "scripts/**/*.js", load: false},
       {pattern: "Packages/**/*.js", load: false},
+
+      "!**/*_test.js",
+      "!**/*_test.coffee",
+      "!scripts/tests/**/*",
     ],
 
     tests: [
@@ -55,7 +59,7 @@ module.exports = function(wallaby) {
     ],
 
     env: {
-      kind: 'electron',
+      kind: 'phantomjs',
     },
 
     preprocessors: {
@@ -63,7 +67,10 @@ module.exports = function(wallaby) {
 
       // 'scripts/*.js': file => buble.transform(file.content, {file: file.path}),
       // 'Packages/*.js': file => buble.transform(file.content, {file: file.path}),
-      '**/*.yaml': file => JSON.stringify(yaml.load(file.content))
+
+      'scripts/**/*.js': wallaby.compilers.babel({ presets: ['es2015'] }),
+      'Packages/**/*.js': wallaby.compilers.babel({ presets: ['es2015'] }),
+      '**/*.yaml': file => JSON.stringify(yaml.load(file.content)),
     },
 
     postProcessors: wallabyPostprocessor,
@@ -78,6 +85,7 @@ module.exports = function(wallaby) {
     setup: function () {
       // required to trigger test loading
       window.__moduleBundler.loadTests();
+      // wallaby.testFramework.ui('bdd');
     },
 
     debug: true
