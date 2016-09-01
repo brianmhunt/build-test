@@ -10,7 +10,7 @@ includes = {
 }
 
 describe('include_test', ->
-  before(() => global.ran.push('include-cs'))
+  before(() -> global.ran.push('include-cs'))
 
   it("loads coffeescript", ->
     assert.equal(includes.ic_abs.name, 'include.coffee')

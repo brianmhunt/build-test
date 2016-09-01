@@ -1,8 +1,6 @@
 'use strict'
 
-const _ = require('lodash')
 const fs = require('fs')
-const path = require('path')
 const yaml = require('js-yaml')
 const wallabyWebpack = require('wallaby-webpack')
 
@@ -19,13 +17,13 @@ module.exports = function (wallaby) {
   return {
     files: config.wallaby.files,
     tests: config.wallaby.tests,
-    env: { kind: 'electron', },
+    env: config.wallaby.env,
     testFramework: 'mocha',
-    // workers: 1,
-    debug: true,
+    debug: config.wallaby.debug,
+    workers: config.wallaby.workers,
 
     compilers: {
-      // '**/*.js': wallaby.compilers.babel({presets: ['es2015']}),
+      '**/*.js': wallaby.compilers.babel({}),
       '**/*.coffee': wallaby.compilers.coffeeScript({noFileRename: true})
     },
 
@@ -35,17 +33,6 @@ module.exports = function (wallaby) {
 
     postprocessor: wallabyPostprocessor,
 
-    setup: function () {
-      window.assert = chai.assert
-      window.expect = chai.expect
-      window.bootstrapped = true
-      window.__moduleBundler.loadTests()
-    },
-
-    workers: {
-      initial: 1,
-      regular: 1
-    }
-
+    setup: () => window.__moduleBundler.loadTests()
   }
 }

@@ -1,4 +1,13 @@
+
 wallaby:
+  debug: true
+  env:
+    kind: electron
+  #
+  # workers:
+  #   initial: 1
+  #   regular: 1
+
   webpack:
     node:
       __dirname: true
@@ -6,16 +15,19 @@ wallaby:
 
     module:
       loaders:
-      - test: !!js/regexp /\.yaml$/
+      - test: !!js/regexp /\.(yaml|json)$/
         loaders:
           - json-loader
+      - test: !!js/regexp /\.html$/
+        loaders:
+          - raw-loader
 
   files:
     # Libs
     - pattern: app/static/libs.js
       instrument: false
 
-    # Tests
+    # Test libs
     - pattern: node_modules/chai/chai.js
       instrument: false
     - pattern: node_modules/sinon/pkg/sinon.js
@@ -35,30 +47,17 @@ wallaby:
     - pattern: Packages/**/*.yaml
       load: false
 
-    # Ignores - included via entry.js
-    # - pattern: "**/*_test.js"
-    #   load: false
-    # - pattern: "**/*_test.coffee"
-    #   load: false
-    # - pattern: "scripts/tests/**/*.coffee"
-    #   load: false
-    # - pattern: "scripts/tests/**/*.js"
-    #   load: false
-
     - pattern: "!scripts/entry.js"
-
+    - pattern: "**/*_test.js"
+      load: false
+    - pattern: "**/*_test.coffee"
+      load: false
+    - pattern: "scripts/tests/**/*.coffee"
+      load: false
+    - pattern: "scripts/tests/**/*.js"
+      load: false
 
   tests:
     - pattern: scripts/entry.js
+      instrument: false
       load: false
-    # # --- scripts/tests/*
-    # - pattern: 'scripts/tests/**/*.coffee'
-    #   load: false
-    # - pattern: 'scripts/tests/**/*.js'
-    #   load: false
-    #
-    # # --- *_test.coffee ---
-    # - pattern: 'Packages/**/*_test.coffee'
-    #   load: false
-    # - pattern: 'scripts/**/*_test.coffee'
-    #   load: false

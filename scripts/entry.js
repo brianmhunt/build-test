@@ -4,6 +4,9 @@
 // This file should be run once before any tests.  It sets up test-wide
 // calls e.g. beforeEach.
 //
+global.assert = chai.assert
+global.bootstrapped = true
+
 
 before(() => global.ran = [])
 
@@ -13,7 +16,7 @@ beforeEach(() => {
 
 
 after(() => {
-  console.log(global.ran)
+  // console.log(global.ran)
   assert.include(global.ran, 'basic-js')
   assert.include(global.ran, 'basic-cs')
   assert.include(global.ran, 'include-cs')
