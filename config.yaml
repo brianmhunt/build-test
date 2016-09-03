@@ -36,27 +36,15 @@ wallaby:
     # App and Tests
     - pattern: scripts/**/*.js
       load: false
-    - pattern: Packages/**/*.js
-      load: false
     - pattern: scripts/**/*.coffee
-      load: false
-    - pattern: Packages/**/*.coffee
-      load: false
-    - pattern: scripts/**/*.yaml
-      load: false
-    - pattern: Packages/**/*.yaml
       load: false
 
     # entry.js has to be loaded in advance (and pre-processed by webpack).
     - pattern: "scripts/entry.js"
 
-    - pattern: "**/*_test.coffee"
-      ignore: true
-    - pattern: "scripts/tests/**/*.coffee"
+    - pattern: "scripts/**/*_test.coffee"
       ignore: true
 
   tests:
     - pattern: "scripts/**/*_test.coffee"
-      load: false
-    - pattern: "scripts/tests/**/*.coffee"
-      load: false
+      ignore: true

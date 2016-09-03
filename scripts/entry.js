@@ -21,11 +21,8 @@ require('./entry-helper')
 after(() => {
   // console.log(global.ran)
   assert.include(global.ran, 'helper')
-  assert.include(global.ran, 'basic-cs')
   assert.include(global.ran, 'before-each')
   assert.include(global.ran, 'include-cs')
-  assert.include(global.ran, 'tt-cs')
-  assert.include(global.ran, 'package')
 })
 
 
