@@ -3,10 +3,10 @@ wallaby:
   debug: true
   env:
     kind: electron
-  #
-  # workers:
-  #   initial: 1
-  #   regular: 1
+
+  workers:
+    initial: 1
+    regular: 1
 
   webpack:
     node:
@@ -47,17 +47,24 @@ wallaby:
     - pattern: Packages/**/*.yaml
       load: false
 
-    - pattern: "!scripts/entry.js"
+    # entry.js has to be loaded in advance (and pre-processed by webpack).
+    - pattern: "scripts/entry.js"
+
     - pattern: "**/*_test.js"
-      load: false
+      ignore: true
     - pattern: "**/*_test.coffee"
+      ignore: true
+    - pattern: "scripts/tests/**/*.coffee"
+      ignore: true
+    - pattern: "scripts/tests/**/*.js"
+      ignore: true
+
+  tests:
+    - pattern: "scripts/**/*_test.js"
+      load: false
+    - pattern: "scripts/**/*_test.coffee"
       load: false
     - pattern: "scripts/tests/**/*.coffee"
       load: false
     - pattern: "scripts/tests/**/*.js"
-      load: false
-
-  tests:
-    - pattern: scripts/entry.js
-      instrument: false
       load: false
