@@ -23,10 +23,6 @@ wallaby:
           - raw-loader
 
   files:
-    # Libs
-    - pattern: app/static/libs.js
-      instrument: false
-
     # Test libs
     - pattern: node_modules/chai/chai.js
       instrument: false
