@@ -11,6 +11,7 @@ global.bootstrapped = true
 before(() => global.ran = [])
 
 beforeEach(() => {
+  global.beforeEach_run = true
   global.ran.push('before-each')
 })
 
@@ -34,13 +35,3 @@ describe("inline test", function () {
 
 
 global.entry_run = true
-
-//
-// var testsPath = require.context('./tests', true, /\.(js|coffee)$/)
-// testsPath.keys().forEach(testsPath)
-//
-// var testsPath = require.context('./', true, /_tests?\.(js|coffee)$/)
-// testsPath.keys().forEach(testsPath)
-//
-// var testsPath = require.context('../Packages', true, /_tests?\.(js|coffee)$/)
-// testsPath.keys().forEach(testsPath)

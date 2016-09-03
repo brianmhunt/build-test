@@ -50,21 +50,13 @@ wallaby:
     # entry.js has to be loaded in advance (and pre-processed by webpack).
     - pattern: "scripts/entry.js"
 
-    - pattern: "**/*_test.js"
-      ignore: true
     - pattern: "**/*_test.coffee"
       ignore: true
     - pattern: "scripts/tests/**/*.coffee"
       ignore: true
-    - pattern: "scripts/tests/**/*.js"
-      ignore: true
 
   tests:
-    - pattern: "scripts/**/*_test.js"
-      load: false
     - pattern: "scripts/**/*_test.coffee"
       load: false
     - pattern: "scripts/tests/**/*.coffee"
-      load: false
-    - pattern: "scripts/tests/**/*.js"
       load: false
