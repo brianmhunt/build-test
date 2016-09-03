@@ -43,4 +43,4 @@ wallaby:
 
   tests:
     - pattern: "scripts/**/*_test.coffee"
-      ignore: true
+      load: false
