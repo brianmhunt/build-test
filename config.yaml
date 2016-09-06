@@ -29,14 +29,14 @@ wallaby:
     - pattern: node_modules/sinon/pkg/sinon.js
       instrument: false
 
+    # entry.js has to be loaded in advance (and pre-processed by webpack).
+    - pattern: "scripts/entry.js"
+
     # App and Tests
     - pattern: scripts/**/*.js
       load: false
     - pattern: scripts/**/*.coffee
       load: false
-
-    # entry.js has to be loaded in advance (and pre-processed by webpack).
-    - pattern: "scripts/entry.js"
 
     - pattern: "scripts/**/*_test.coffee"
       ignore: true

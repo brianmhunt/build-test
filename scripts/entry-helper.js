@@ -1,5 +1,7 @@
 
-before(() => {
-  global.ran.push("helper")
-  global.helper = true
-})
+
+console.log("Require'd")
+var S = {}
+
+
+module.exports = S
