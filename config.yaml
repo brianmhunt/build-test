@@ -9,6 +9,10 @@ wallaby:
     regular: 1
 
   webpack:
+    entryPatterns:
+      - scripts/entry.js
+      - scripts/*_test.coffee
+
     node:
       __dirname: true
       __filename: true
@@ -33,9 +37,12 @@ wallaby:
     - pattern: "scripts/entry.js"
 
     # App and Tests
-    - pattern: scripts/**/*.js
+    - pattern: scripts/*.js
       load: false
-    - pattern: scripts/**/*.coffee
+    - pattern: scripts/*.coffee
+      load: false
+
+    - pattern: "scripts/*.js"
       load: false
 
     - pattern: "scripts/**/*_test.coffee"

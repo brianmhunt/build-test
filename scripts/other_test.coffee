@@ -1,5 +1,4 @@
 
-
 describe('include_test', ->
   it("imports a singleton", ->
     global.ehs.ias = true
