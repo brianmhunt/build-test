@@ -9,6 +9,10 @@ wallaby:
     regular: 1
 
   webpack:
+    entryPatterns:
+      - scripts/entry.js
+      - scripts/*_test.coffee
+
     node:
       __dirname: true
       __filename: true
@@ -23,40 +27,27 @@ wallaby:
           - raw-loader
 
   files:
-    # Libs
-    - pattern: app/static/libs.js
-      instrument: false
-
     # Test libs
     - pattern: node_modules/chai/chai.js
       instrument: false
     - pattern: node_modules/sinon/pkg/sinon.js
       instrument: false
 
-    # App and Tests
-    - pattern: scripts/**/*.js
-      load: false
-    - pattern: Packages/**/*.js
-      load: false
-    - pattern: scripts/**/*.coffee
-      load: false
-    - pattern: Packages/**/*.coffee
-      load: false
-    - pattern: scripts/**/*.yaml
-      load: false
-    - pattern: Packages/**/*.yaml
-      load: false
-
     # entry.js has to be loaded in advance (and pre-processed by webpack).
     - pattern: "scripts/entry.js"
 
-    - pattern: "**/*_test.coffee"
-      ignore: true
-    - pattern: "scripts/tests/**/*.coffee"
+    # App and Tests
+    - pattern: scripts/*.js
+      load: false
+    - pattern: scripts/*.coffee
+      load: false
+
+    - pattern: "scripts/*.js"
+      load: false
+
+    - pattern: "scripts/**/*_test.coffee"
       ignore: true
 
   tests:
     - pattern: "scripts/**/*_test.coffee"
-      load: false
-    - pattern: "scripts/tests/**/*.coffee"
       load: false
